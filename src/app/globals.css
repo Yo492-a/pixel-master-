@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #05070c;
+    color: #f3f6fc;
+  }
+  :focus-visible {
+    outline: 2px solid #3fd8ff;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* العنصر التوقيعي: حلقة Aperture متوهجة — صدى لشعار P1 الدائري */
+.aperture-ring {
+  position: relative;
+}
+.aperture-ring::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  border-radius: 9999px;
+  border: 1px solid rgba(63, 216, 255, 0.25);
+  background: radial-gradient(circle, rgba(63,216,255,0.14), transparent 70%);
+  filter: blur(0.5px);
+  pointer-events: none;
+}
+
+.text-glow {
+  text-shadow: 0 0 24px rgba(63, 216, 255, 0.45);
+}
