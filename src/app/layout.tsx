@@ -9,7 +9,7 @@ const display = Space_Grotesk({
 });
 
 const body = Inter({
-  subsets: ["latin", "arabic"],
+  subsets: ["latin"],
   variable: "--font-body",
 });
 
