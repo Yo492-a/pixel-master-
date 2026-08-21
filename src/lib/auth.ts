@@ -21,7 +21,6 @@ export const authOptions: NextAuthOptions = {
         });
         if (!user) return null;
 
-        // كلمة المرور محفوظة كـ hash فقط — لا يوجد أي نص صريح في الكود أو القاعدة
         const valid = await bcrypt.compare(credentials.password, user.passwordHash);
         if (!valid) return null;
 
@@ -31,10 +30,17 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = (user as { role: string }).role;
+      if (user) token.role = user.role;
       return token;
     },
     async session({ session, token }) {
+      session.user.id = token.sub as string;
+      session.user.role = token.role;
+      return session;
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+};    async session({ session, token }) {
       if (session.user) {
         (session.user as { role?: string }).role = token.role as string;
         (session.user as { id?: string }).id = token.sub as string;
