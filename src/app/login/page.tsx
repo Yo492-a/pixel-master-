@@ -36,7 +36,7 @@ export default function LoginPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-void px-6">
       <div className="w-full max-w-sm rounded-2xl border border-line bg-surface p-8">
-        <h1 className="text-center font-display text-2xl font-700 text-ink">
+        <h1 className="text-center font-display text-2xl font-bold text-ink">
           PIXEL Master
         </h1>
         <p className="mt-1 text-center text-sm text-silver">
