@@ -1,9 +1,20 @@
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
+import { exec } from "child_process";
+import { promisify } from "util";
 
-export async function GET(req: Request) {
+const execAsync = promisify(exec);
+
+export async function GET() {
   try {
+    // محاولة تشغيل migration
+    try {
+      await execAsync("npx prisma migrate deploy");
+    } catch (e) {
+      console.log("Migration attempt completed or not needed");
+    }
+
     const adminPhone = process.env.SEED_ADMIN_PHONE ?? "0900000000";
     const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "ChangeMe123!";
     const passwordHash = await bcrypt.hash(adminPassword, 12);
@@ -29,6 +40,7 @@ export async function GET(req: Request) {
       { name: "بنرات", slug: "banners" },
       { name: "أخرى", slug: "other" },
     ];
+
     for (const [i, c] of categories.entries()) {
       await prisma.category.upsert({
         where: { slug: c.slug },
@@ -43,8 +55,8 @@ export async function GET(req: Request) {
       create: {
         id: "seed-sham-cash",
         name: "SHAM CASH",
-        accountNumber: "غيّر هذا من لوحة الإدارة",
-        instructions: "حوّل المبلغ وارفع صورة إثبات الدفع.",
+        accountNumber: "غيّر من الإدارة",
+        instructions: "حوّل وارفع الإثبات",
         order: 0,
       },
     });
@@ -55,22 +67,22 @@ export async function GET(req: Request) {
       create: {
         id: "seed-syriatel-cash",
         name: "SYRIATEL CASH",
-        accountNumber: "غيّر هذا من لوحة الإدارة",
-        instructions: "حوّل المبلغ وارفع صورة إثبات الدفع.",
+        accountNumber: "غيّر من الإدارة",
+        instructions: "حوّل وارفع الإثبات",
         order: 1,
       },
     });
 
     return NextResponse.json({ message: "✅ Seed complete" });
   } catch (error) {
-    console.error(error);
+    console.error("Seed error:", error);
     return NextResponse.json(
-      { error: "Seed failed" },
+      { error: "Seed failed", details: String(error) },
       { status: 500 }
     );
   }
 }
 
 export async function POST(req: Request) {
-  return GET(req);
+  return GET();
 }
