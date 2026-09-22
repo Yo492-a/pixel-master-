@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
@@ -31,7 +32,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-      <body className="font-body bg-void text-ink antialiased">{children}</body>
+      <body className="font-body bg-void text-ink antialiased">
+        {children}
+        <WhatsAppButton />
+      </body>
     </html>
   );
 }
