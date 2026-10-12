@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const items = [
+  { href: "/admin/orders", title: "الطلبات", desc: "طلبات الزبائن، تغيير الحالة وتحديد السعر" },
   { href: "/admin/works", title: "الأعمال", desc: "رفع صور وفيديوهات، نشر وإخفاء وحذف" },
   { href: "/admin/categories", title: "التصنيفات", desc: "إضافة وتعديل وترتيب التصنيفات" },
   { href: "/", title: "عرض الموقع", desc: "شاهد الموقع كما يراه الزوار" },
