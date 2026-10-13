@@ -49,6 +49,15 @@ function Card({ o, onChange }: { o: Order; onChange: () => void }) {
     onChange();
   }
 
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(`${window.location.origin}/pay/${o.id}`);
+      setMsg("تم نسخ رابط الدفع");
+    } catch {
+      setMsg("ما قدرت أنسخ الرابط");
+    }
+  }
+
   return (
     <li className="rounded-xl bg-white/5 p-4">
       <div className="flex items-center justify-between">
@@ -89,9 +98,12 @@ function Card({ o, onChange }: { o: Order; onChange: () => void }) {
           className="w-24 rounded bg-white/10 p-2"
         />
       </div>
-      <div className="mt-3 flex items-center gap-4">
+      <div className="mt-3 flex flex-wrap items-center gap-4">
         <button onClick={save} className="rounded bg-blue-600 px-4 py-1">
           حفظ
+        </button>
+        <button onClick={copyLink} className="text-blue-400">
+          نسخ رابط الدفع
         </button>
         <button onClick={remove} className="text-red-400">
           حذف
